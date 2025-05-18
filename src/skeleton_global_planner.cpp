@@ -17,8 +17,6 @@ SkeletonGlobalPlanner::SkeletonGlobalPlanner(const ros::NodeHandle& nh,
       skeleton_generator_() {
   constraints_.setParametersFromRos(nh_private_);
 
-  nh_private_.param("sparse_graph_path", sparse_graph_path_,
-                    sparse_graph_path_);
   nh_private_.param("visualize", visualize_, visualize_);
   nh_private_.param("esdf_max_distance", esdf_max_distance_, esdf_max_distance_);
   nh_private_.param("min_separation_angle", min_separation_angle_, min_separation_angle_);
@@ -136,9 +134,6 @@ void SkeletonGlobalPlanner::run(const ros::TimerEvent& event) {
 }
 
 void SkeletonGlobalPlanner::generateSparseGraph() {
-  // ROS_INFO("About to generate skeleton graph.");
-  // skeleton_generator_.updateSkeletonFromLayer();
-  // ROS_INFO("Re-populated from layer.");
 
   skeleton_generator_.generateSparseGraph();
   ROS_INFO("Generated skeleton graph.");

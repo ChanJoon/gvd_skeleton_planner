@@ -71,14 +71,15 @@
 
     <param name="visualize" value="true" />
     <param name="esdf_max_distance" value="2.0" />
+    <param name="robot_radius" value="0.5" />
 
     <!-- <param name="icp_refine_roll_pitch" value="false" /> -->
     <!-- If using full euclidean: 0.78 (45 degrees) -->
     <!-- If using quasi-Euclidean: 1.57 (90 degrees) -->
     <param name="min_separation_angle" value="1.57" />
-    <param name="min_gvd_distance" value="0.1" />
+    <param name="min_gvd_distance" value="0.4" />
     <param name="num_neighbors_for_edge" value="9" />
-    <param name="generate_by_layer_neighbors" value="false" />
+    <param name="generate_by_layer_neighbors" value="true" />
   </node>
 
   <!-- <node name="voxblox_skeleton_planner" pkg="voxblox_skeleton_planner" type="skeleton_global_planner_node" output="screen" clear_params="true">
