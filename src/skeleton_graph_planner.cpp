@@ -1,7 +1,7 @@
 #include <mav_planning_common/utils.h>
 #include <mav_trajectory_generation/timing.h>
 
-#include "gvd_skeleton/skeleton_graph_planner.h"
+#include "gvd_skeleton_planner/skeleton_graph_planner.h"
 
 namespace mav_planning {
 
