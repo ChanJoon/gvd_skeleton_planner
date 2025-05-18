@@ -1,8 +1,8 @@
 <launch>
   <arg name="frame_id" default="map" />
-  <arg name="map_name"                 default="$(find gvd_skeleton)/maps/small_forest01cutoff.pcd"/>
+  <arg name="map_name"                 default="$(find gvd_skeleton_planner)/maps/small_forest01cutoff.pcd"/>
 
-  <node name="gvd_skeleton" pkg="gvd_skeleton" type="skeleton_global_planner_node" output="screen" clear_params="true">
+  <node name="gvd_skeleton_planner" pkg="gvd_skeleton_planner" type="skeleton_global_planner_node" output="screen" clear_params="true">
     <remap from="~pointcloud" to="/map_generator/global_cloud"/>
     <param name="visualize" value="true" />
     <param name="esdf_max_distance" value="5.0" />
@@ -21,7 +21,7 @@
   </node>
 
   <!-- Use PCD file to generate map -->
-  <node pkg="gvd_skeleton" name="map_pub" type="map_pub" output="screen" args="$(arg map_name)">
+  <node pkg="gvd_skeleton_planner" name="map_pub" type="map_pub" output="screen" args="$(arg map_name)">
     <param name="add_boundary" value="0"/>
     <param name="is_bridge" value="0"/>
     <param name="downsample_res" value="0.1"/>         
@@ -30,5 +30,5 @@
     <param name="map_offset_z" value="0.0"/>
   </node>
 
-  <node pkg="rviz" name="rviz" type="rviz" args="-d $(find gvd_skeleton)/config/rviz.rviz" />
+  <node pkg="rviz" name="rviz" type="rviz" args="-d $(find gvd_skeleton_planner)/config/rviz.rviz" />
 </launch>
