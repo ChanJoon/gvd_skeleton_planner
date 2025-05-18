@@ -40,7 +40,15 @@ cd ..
 catkin build
 ```
 
-## Try out Skeleton planning
+## Try out Skeleton generation and planning
+### Running
+
+```
+roslaunch gvd_skeleton_planner voxblox_skeleton.launch
+```
+
+![image](docs/gvd_demo.png)
+
 ### Get the planning panel
 
 Make sure all the packages have built successfully! Re-source your workspace and start up rviz.
@@ -64,10 +72,6 @@ You can also edit the numbers in the x, y, z, yaw fields manually; the markers a
 
 ### Using the Skeleton planner:
 
-```
-roslaunch gvd_skeleton_planner voxblox_skeleton.launch
-```
-
 In the planning panel,
   1. enter `voxblox_skeleton_planner` as the planner name
   2. add a `VoxbloxMesh` display with the topic `/voxblox_skeleton_planner/mesh`
@@ -78,3 +82,20 @@ You can now press the "Planner Service" button to plan!
 Pink is the shortened path from the sparse graph, and teal is smoothed using loco through it.
 
 ![image](https://user-images.githubusercontent.com/5616392/46147219-3155eb80-c265-11e8-9787-150906e5bf90.png)
+
+
+## Reference
+[Sparse 3D Topological Graphs for Micro-Aerial Vehicle Planning](https://arxiv.org/abs/1803.04345)
+
+```
+@INPROCEEDINGS{8594152,
+  author={Oleynikova, Helen and Taylor, Zachary and Siegwart, Roland and Nieto, Juan},
+  booktitle={2018 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+  title={Sparse 3D Topological Graphs for Micro-Aerial Vehicle Planning}, 
+  year={2018},
+  volume={},
+  number={},
+  pages={1-9},
+  keywords={Planning;Three-dimensional displays;Two dimensional displays;Skeleton;Robot sensing systems;Topology},
+  doi={10.1109/IROS.2018.8594152}}
+```
