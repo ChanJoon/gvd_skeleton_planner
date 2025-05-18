@@ -1,0 +1,121 @@
+<launch>
+  <arg name="verbose" default="true"/>
+  <arg name="voxel_size" default="0.10" />
+  <arg name="clear_radius" default="1.0" />
+  <arg name="robot_radius" default="0.1" />
+  <arg name="frame_id" default="map" />
+  <!-- <arg name="map_name"                 default="$(find gvd_skeleton)/maps/small_forest01cutoff.pcd"/> -->
+  <arg name="map_name"                 default="$(find gvd_skeleton)/maps/office.pcd"/>
+
+  <node name="voxblox_node" pkg="voxblox_ros" type="esdf_server" output="screen" args="-alsologtostderr" clear_params="true">
+    <remap from="pointcloud" to="/map_generator/global_cloud"/>
+    <remap from="voxblox_node/esdf_map_out" to="esdf_map" />
+    <remap from="voxblox_node/tsdf_map_out" to="tsdf_map" />
+
+    <!-- Publishing settings. -->
+    <param name="publish_tsdf_map" value="true" />
+    <param name="publish_esdf_map" value="true" />
+    <param name="update_mesh_every_n_sec" value="0.25" />
+    <param name="update_esdf_every_n_sec" value="0.25" />
+    <param name="publish_map_every_n_sec" value="0.25" />
+
+    <param name="method" value="fast" />
+    <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
+    <param name="truncation_distance" value="0.5" />
+    <param name="tsdf_voxels_per_side" value="16" />
+    <param name="esdf_max_distance_m" value="2.0" />
+    <param name="max_ray_length_m" value="8.0" />
+    <param name="voxel_carving_enabled" value="true" />
+    <param name="color_mode" value="normals" />
+    <param name="use_tf_transforms" value="false" />
+    <param name="min_time_between_msgs_sec" value="0.10" />
+    <param name="clear_sphere_for_planning" value="true" />
+    <param name="occupied_sphere_radius" value="4.0" />
+    <param name="clear_sphere_radius" value="$(arg clear_radius)" />
+    <param name="slice_level" value="1.0" />
+    <param name="world_frame" value="$(arg frame_id)" />
+    <param name="verbose" value="$(arg verbose)" />
+
+    <param name="publish_pointclouds" value="true" />
+    <param name="enable_icp" value="true" />
+    <param name="icp_iterations" value="10" />
+  </node>
+
+  <node pkg="gvd_skeleton" name="map_pub" type="map_pub" output="screen" args="$(arg map_name)">
+    <param name="add_boundary" value="0"/>
+    <param name="is_bridge" value="0"/>
+    <param name="downsample_res" value="0.1"/>         
+    <param name="frame_id" value="$(arg frame_id)"/>
+    <param name="map_offset_x" value="0.0"/>   
+    <param name="map_offset_y" value="0.0"/>   
+    <param name="map_offset_z" value="0.0"/>
+  </node>
+
+  <node pkg="rviz" name="rviz" type="rviz" args="-d $(find gvd_skeleton)/config/rviz.rviz" />
+
+  <node pkg="gvd_skeleton" name="skeleton_global_planner" type="skeleton_global_planner_node" output="screen">
+    <remap from="skeleton_global_planner/esdf_map_in" to="esdf_map" />
+    <remap from="skeleton_global_planner/tsdf_map_in" to="tsdf_map" />
+
+    <param name="robot_radius" value="$(arg robot_radius)" />
+    <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
+    <param name="tsdf_voxels_per_side" value="16" />
+    <param name="update_mesh_every_n_sec" value="0.0" />
+    <param name="frame_id" value="$(arg frame_id)" />
+    <param name="world_frame" value="$(arg frame_id)" />
+    <param name="trust_approx_solution" value="true" />
+    <param name="publish_traversable" value="true" />
+    <param name="split_at_collisions" value="true" />
+    <param name="optimize_time" value="true" />
+    <param name="verbose" value="$(arg verbose)" />
+
+    <param name="visualize" value="true" />
+    <param name="esdf_max_distance" value="2.0" />
+
+    <!-- <param name="icp_refine_roll_pitch" value="false" /> -->
+    <!-- If using full euclidean: 0.78 (45 degrees) -->
+    <!-- If using quasi-Euclidean: 1.57 (90 degrees) -->
+    <param name="min_separation_angle" value="1.57" />
+    <param name="min_gvd_distance" value="0.1" />
+    <param name="num_neighbors_for_edge" value="18" />
+    <param name="generate_by_layer_neighbors" value="false" />
+  </node>
+
+  <!-- <node name="voxblox_skeleton_planner" pkg="voxblox_skeleton_planner" type="skeleton_global_planner_node" output="screen" clear_params="true">
+    <remap from="voxblox_skeleton_planner/esdf_map_in" to="esdf_map" />
+    <remap from="voxblox_skeleton_planner/tsdf_map_in" to="tsdf_map" />
+    <param name="visualize" value="true" />
+    <param name="robot_radius" value="1.0" />
+    <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
+    <param name="tsdf_voxels_per_side" value="16" />
+
+    <param name="update_mesh_every_n_sec" value="0.25" />
+    <param name="frame_id" value="$(arg frame_id)" />
+    <param name="world_frame" value="$(arg frame_id)" />
+    <param name="trust_approx_solution" value="true" />
+    <param name="publish_traversable" value="true" />
+    <param name="split_at_collisions" value="true" />
+    <param name="optimize_time" value="true" />
+    <param name="verbose" value="true" />
+  </node> -->
+  <!-- <node name="voxblox_rrt_planner" pkg="voxblox_rrt_planner" type="voxblox_rrt_planner_node" output="screen" clear_params="true">
+    <remap from="voxblox_rrt_planner/esdf_map_in" to="esdf_map" />
+    <remap from="voxblox_rrt_planner/tsdf_map_in" to="tsdf_map" />
+    <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
+    <param name="tsdf_voxels_per_side" value="16" />
+
+    <param name="visualize" value="true" />
+    <param name="robot_radius" value="0.5" />
+
+    <param name="update_mesh_every_n_sec" value="0.0" />
+    <param name="num_seconds_to_plan" value="2.0" />
+    <param name="do_smoothing" value="false" />
+    <param name="frame_id" value="$(arg frame_id)" />
+    <param name="world_frame" value="$(arg frame_id)" />
+    <param name="trust_approx_solution" value="true" />
+    <param name="publish_traversable" value="true" />
+    <param name="split_at_collisions" value="true" />
+    <param name="optimize_time" value="true" />
+    <param name="verbose" value="true" />
+  </node> -->
+</launch>

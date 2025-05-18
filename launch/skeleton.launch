@@ -1,0 +1,34 @@
+<launch>
+  <arg name="frame_id" default="map" />
+  <arg name="map_name"                 default="$(find gvd_skeleton)/maps/small_forest01cutoff.pcd"/>
+
+  <node name="gvd_skeleton" pkg="gvd_skeleton" type="skeleton_global_planner_node" output="screen" clear_params="true">
+    <remap from="~pointcloud" to="/map_generator/global_cloud"/>
+    <param name="visualize" value="true" />
+    <param name="esdf_max_distance" value="5.0" />
+    <param name="min_separation_angle" value="0.7" />
+    <param name="robot_radius" value="0.1" />
+    <param name="tsdf_voxel_size" value="0.10" />
+    <param name="tsdf_voxels_per_side" value="16" />
+    <param name="update_mesh_every_n_sec" value="0.0" />
+    <param name="frame_id" value="$(arg frame_id)" />
+    <param name="world_frame" value="$(arg frame_id)" />
+    <param name="trust_approx_solution" value="true" />
+    <param name="publish_traversable" value="true" />
+    <param name="split_at_collisions" value="true" />
+    <param name="optimize_time" value="true" />
+    <param name="verbose" value="true" />
+  </node>
+
+  <!-- Use PCD file to generate map -->
+  <node pkg="gvd_skeleton" name="map_pub" type="map_pub" output="screen" args="$(arg map_name)">
+    <param name="add_boundary" value="0"/>
+    <param name="is_bridge" value="0"/>
+    <param name="downsample_res" value="0.1"/>         
+    <param name="map_offset_x" value="0.0"/>   
+    <param name="map_offset_y" value="0.0"/>   
+    <param name="map_offset_z" value="0.0"/>
+  </node>
+
+  <node pkg="rviz" name="rviz" type="rviz" args="-d $(find gvd_skeleton)/config/rviz.rviz" />
+</launch>
