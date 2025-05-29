@@ -1,9 +1,13 @@
 # GVD Skeleton Planner
 
+> ⚠️ This project is currently UNDER DEVELOPMENT
+
 A ROS-based planning package that generates skeleton graphs from ESDF using Generalized Voronoi Diagrams (GVDs)
 
 ## Installation
 This package is intended to be used with [mav_voxblox_planning](https://github.com/ethz-asl/mav_voxblox_planning)
+
+For ROS1 Noetic, please use the forked versions of `voxblox` and `mav_voxblox_planning` that resolve build and dependency issues, and remove TF lookup functionality for simplified integration.
 
 ```bash
 mkdir -p ~/catkin_ws/src
@@ -49,7 +53,11 @@ roslaunch gvd_skeleton_planner voxblox_skeleton.launch
 
 ![image](docs/gvd_demo.png)
 
-### Get the planning panel
+## TODOs
+- [ ] Refactor and clean up legacy or unused code
+- [ ] Implement core planning functionalities
+
+<!-- ### Get the planning panel
 
 Make sure all the packages have built successfully! Re-source your workspace and start up rviz.
 
@@ -81,7 +89,7 @@ In the planning panel,
 You can now press the "Planner Service" button to plan! 
 Pink is the shortened path from the sparse graph, and teal is smoothed using loco through it.
 
-![image](https://user-images.githubusercontent.com/5616392/46147219-3155eb80-c265-11e8-9787-150906e5bf90.png)
+![image](https://user-images.githubusercontent.com/5616392/46147219-3155eb80-c265-11e8-9787-150906e5bf90.png) -->
 
 
 ## Reference
@@ -99,3 +107,9 @@ Pink is the shortened path from the sparse graph, and teal is smoothed using loc
   keywords={Planning;Three-dimensional displays;Two dimensional displays;Skeleton;Robot sensing systems;Topology},
   doi={10.1109/IROS.2018.8594152}}
 ```
+
+## License
+
+This work is distributed under the BSD-3-Clause License.
+
+It is based in part on the [mav_voxblox_planning](https://github.com/ethz-asl/mav_voxblox_planning)
