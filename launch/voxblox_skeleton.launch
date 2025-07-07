@@ -2,7 +2,7 @@
   <arg name="verbose" default="true"/>
   <arg name="voxel_size" default="0.10" />
   <arg name="clear_radius" default="1.0" />
-  <arg name="robot_radius" default="0.1" />
+  <arg name="robot_radius" default="0.5" />
   <arg name="frame_id" default="map" />
   <!-- <arg name="map_name"                 default="$(find gvd_skeleton_planner)/maps/small_forest01cutoff.pcd"/> -->
   <arg name="map_name"                 default="$(find gvd_skeleton_planner)/maps/office.pcd"/>
@@ -71,7 +71,6 @@
 
     <param name="visualize" value="true" />
     <param name="esdf_max_distance" value="2.0" />
-    <param name="robot_radius" value="0.5" />
 
     <!-- <param name="icp_refine_roll_pitch" value="false" /> -->
     <!-- If using full euclidean: 0.78 (45 degrees) -->
@@ -82,41 +81,4 @@
     <param name="generate_by_layer_neighbors" value="true" />
   </node>
 
-  <!-- <node name="voxblox_skeleton_planner" pkg="voxblox_skeleton_planner" type="skeleton_global_planner_node" output="screen" clear_params="true">
-    <remap from="voxblox_skeleton_planner/esdf_map_in" to="esdf_map" />
-    <remap from="voxblox_skeleton_planner/tsdf_map_in" to="tsdf_map" />
-    <param name="visualize" value="true" />
-    <param name="robot_radius" value="1.0" />
-    <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
-    <param name="tsdf_voxels_per_side" value="16" />
-
-    <param name="update_mesh_every_n_sec" value="0.25" />
-    <param name="frame_id" value="$(arg frame_id)" />
-    <param name="world_frame" value="$(arg frame_id)" />
-    <param name="trust_approx_solution" value="true" />
-    <param name="publish_traversable" value="true" />
-    <param name="split_at_collisions" value="true" />
-    <param name="optimize_time" value="true" />
-    <param name="verbose" value="true" />
-  </node> -->
-  <!-- <node name="voxblox_rrt_planner" pkg="voxblox_rrt_planner" type="voxblox_rrt_planner_node" output="screen" clear_params="true">
-    <remap from="voxblox_rrt_planner/esdf_map_in" to="esdf_map" />
-    <remap from="voxblox_rrt_planner/tsdf_map_in" to="tsdf_map" />
-    <param name="tsdf_voxel_size" value="$(arg voxel_size)" />
-    <param name="tsdf_voxels_per_side" value="16" />
-
-    <param name="visualize" value="true" />
-    <param name="robot_radius" value="0.5" />
-
-    <param name="update_mesh_every_n_sec" value="0.0" />
-    <param name="num_seconds_to_plan" value="2.0" />
-    <param name="do_smoothing" value="false" />
-    <param name="frame_id" value="$(arg frame_id)" />
-    <param name="world_frame" value="$(arg frame_id)" />
-    <param name="trust_approx_solution" value="true" />
-    <param name="publish_traversable" value="true" />
-    <param name="split_at_collisions" value="true" />
-    <param name="optimize_time" value="true" />
-    <param name="verbose" value="true" />
-  </node> -->
 </launch>

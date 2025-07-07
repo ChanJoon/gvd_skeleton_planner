@@ -14,11 +14,7 @@
   <depend>roscpp</depend>
   <depend>visualization_msgs</depend>
   <depend>pcl_conversions</depend>
+  <depend>voxblox</depend>
   <depend>voxblox_ros</depend>
-  <depend>voxblox_skeleton</depend>
-  <depend>voxblox_planning_common</depend>
-  <depend>mav_msgs</depend>
-  <depend>mav_path_smoothing</depend>
-  <depend>mav_planning_common</depend>
-  <depend>mav_trajectory_generation_ros</depend>
+  <depend>voxblox_msgs</depend>
 </package>
