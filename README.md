@@ -54,4 +54,4 @@ roslaunch gvd_skeleton_planner voxblox_skeleton.launch
 
 This work is distributed under the BSD-3-Clause License.
 
-It is based in part on the [mav_voxblox_planning](https://github.com/ethz-asl/mav_voxblox_planning)
+It is based in part on the [mav_voxblox_planning](https://github.com/ethz-asl/mav_voxblox_planning), especially `voxblox_skeleton`.
